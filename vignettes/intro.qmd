@@ -1,0 +1,134 @@
+---
+title: "Additional `S3` Methods for `packageIQR`"
+author: Tingting Zhan
+date: "`r format(Sys.time(), 'Last updated %d %B, %Y')`"
+format: 
+  html:
+    page-layout: full
+    html-math-method: katex
+number-sections: true
+toc: true
+toc-location: left
+toc-depth: 4
+toc-title: ''
+editor: source
+bibliography: packageIQR.bib
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: "#" 
+vignette: >
+  %\VignetteIndexEntry{intro}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction
+
+```{r}
+library(packageIQR)
+```
+
+
+# Body 
+
+## `split.packageIQR()`
+
+```{r}
+x = data(package = c('datasets', 'MASS'))
+```
+
+
+```{r}
+x1 = data(package = 'datasets')
+x2 = data(package = 'MASS')
+```
+
+```{r}
+y = x |>
+  split()
+```
+
+```{r}
+stopifnot(
+  identical(y$datasets, x1), 
+  identical(y$MASS, x2)
+)
+```
+
+
+
+## `as.environment.packageIQR()`
+
+```{r}
+ls1 = data(package = 'datasets') |> 
+  as.environment() |> 
+  as.list(sort = TRUE)
+```
+
+
+```{r}
+ls2 = 'package:datasets' |> 
+  as.environment() |> 
+  as.list(sort = TRUE)
+```
+
+This is only true for all-data package.
+```{r}
+stopifnot(identical(ls1, ls2))
+```
+
+
+# Appendix
+
+## `mget()` vs. `data()`
+
+For data name without parentheses, e.g. *`CO2`* from package **`datasets`**,
+
+```{r}
+rm(list = ls(all.names = TRUE))
+data(list = 'CO2', package = 'datasets')
+ls()
+```
+
+```{r}
+z = mget('CO2', envir = as.environment('package:datasets'))
+names(z)
+```
+
+Data names with parentheses, e.g. *`beaver1 (beavers)`*,
+are objects saved to *`beavers.rda`* file in the source.
+
+```{r}
+rm(list = ls(all.names = TRUE))
+data(list = 'beavers', package = 'datasets')
+ls()
+```
+
+```{r}
+rm(list = ls(all.names = TRUE))
+tryCatch(expr = {
+  data(list = 'beaver1', package = 'datasets')
+}, error = identity)
+```
+
+```{r}
+rm(list = ls(all.names = TRUE))
+z = mget(x = c('beaver1', 'beaver2'), envir = as.environment('package:datasets'))
+names(z)
+```
+
+```{r}
+rm(list = ls(all.names = TRUE))
+tryCatch(expr = {
+  mget(x = 'beavers', envir = as.environment('package:datasets'))
+}, error = identity)
+```
+
+Function `base::mget()` is ~200 times faster than function `utils::data()`.
+
+Sometimes function `base::mget()` fails and I do not know why..
+
+Function `utils::data()` looks for 'data' in *many* places.
+
+
