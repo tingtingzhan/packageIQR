@@ -1,7 +1,7 @@
 ---
 title: "Additional `S3` Methods for `packageIQR`"
 author: Tingting Zhan
-date: "`r format(Sys.time(), 'Last updated %d %B, %Y')`"
+date: today
 format: 
   html:
     page-layout: full
@@ -27,17 +27,17 @@ vignette: >
 
 ```{r}
 library(packageIQR)
+library(flextable)
 ```
-
-
-# Body 
-
-## `split.packageIQR()`
 
 ```{r}
-x = data(package = c('datasets', 'MASS'))
+methods(class = 'packageIQR') |>
+  attr(which = 'info', exact = TRUE) |>
+  subset.data.frame(subset = (from != 'packageIQR'))
 ```
 
+
+# `S3` Method Dispatches 
 
 ```{r}
 x1 = data(package = 'datasets')
@@ -45,7 +45,63 @@ x2 = data(package = 'MASS')
 ```
 
 ```{r}
-y = x |>
+x3 = data(package = c('datasets', 'MASS'))
+```
+
+## Convert to `flextable`
+
+The `S3` method dispatch `as_flextable.packageIQR()` ..
+
+```{r}
+#| results: hide
+x1 |> 
+  as_flextable()
+```
+
+
+
+## Row-Bind
+
+The `S3` method dispatch `rbind.packageIQR()` ..
+
+```{r}
+stopifnot(identical(rbind(x1, x2), x3))
+```
+
+
+
+## Head & Tail
+
+The `S3` method dispatch `head.packageIQR()` ..
+
+
+```{r}
+x1 |>
+  head(n = 3L) |>
+  as_flextable()
+```
+
+```{r}
+x2 |>
+  head(n = 3L) |>
+  as_flextable()
+```
+
+```{r}
+x3 |>
+  head(n = 3L) |>
+  as_flextable()
+```
+
+
+
+## Split
+
+The `S3` method dispatch `split.packageIQR()` ..
+
+
+```{r}
+y = x3 |>
   split()
 ```
 
@@ -58,7 +114,9 @@ stopifnot(
 
 
 
-## `as.environment.packageIQR()`
+## Convert to `environment` 
+
+The `S3` method dispatch `as.environment.packageIQR()` ..
 
 ```{r}
 ls1 = data(package = 'datasets') |> 
