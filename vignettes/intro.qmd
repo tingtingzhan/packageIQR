@@ -35,106 +35,33 @@ methods(class = 'packageIQR') |>
   attr(which = 'info', exact = TRUE) |>
   subset.data.frame(subset = (from != 'packageIQR'))
 ```
-
-
-# `S3` Method Dispatches 
+# `dataFrom()`
 
 ```{r}
-x1 = data(package = 'datasets')
-x2 = data(package = 'MASS')
-```
-
-```{r}
-x3 = data(package = c('datasets', 'MASS'))
-```
-
-## Convert to `flextable`
-
-The `S3` method dispatch `as_flextable.packageIQR()` ..
-
-```{r}
-#| results: hide
-x1 |> 
-  as_flextable()
-```
-
-
-
-## Row-Bind
-
-The `S3` method dispatch `rbind.packageIQR()` ..
-
-```{r}
-stopifnot(identical(rbind(x1, x2), x3))
-```
-
-
-
-## Head & Tail
-
-The `S3` method dispatch `head.packageIQR()` ..
-
-
-```{r}
-x1 |>
-  head(n = 3L) |>
-  as_flextable()
-```
-
-```{r}
-x2 |>
-  head(n = 3L) |>
-  as_flextable()
-```
-
-```{r}
-x3 |>
-  head(n = 3L) |>
-  as_flextable()
-```
-
-
-
-## Split
-
-The `S3` method dispatch `split.packageIQR()` ..
-
-
-```{r}
-y = x3 |>
-  split()
-```
-
-```{r}
-stopifnot(
-  identical(y$datasets, x1), 
-  identical(y$MASS, x2)
-)
-```
-
-
-
-## Convert to `environment` 
-
-The `S3` method dispatch `as.environment.packageIQR()` ..
-
-```{r}
-ls1 = data(package = 'datasets') |> 
-  as.environment() |> 
-  as.list(sort = TRUE)
+dataFrom(what = 'data.frame') |> 
+  sapply(FUN = nrow) |>
+  head(n = 20L)
 ```
 
 
 ```{r}
-ls2 = 'package:datasets' |> 
-  as.environment() |> 
-  as.list(sort = TRUE)
+dataFrom(what = 'numeric') |> 
+  sapply(FUN = length)
 ```
 
-This is only true for all-data package.
+
 ```{r}
-stopifnot(identical(ls1, ls2))
+data(package = c('datasets', 'MASS')) |> 
+  dataFrom(what = 'data.frame') |> 
+  names()
 ```
+
+
+```{r}
+# vcdExtra::datasets(package = 'datasets') # similar, but not as good!
+```
+
+
 
 
 # Appendix
@@ -188,5 +115,115 @@ Function `base::mget()` is ~200 times faster than function `utils::data()`.
 Sometimes function `base::mget()` fails and I do not know why..
 
 Function `utils::data()` looks for 'data' in *many* places.
+
+## `S3` Methods `*.packageIQR()`
+
+```{r}
+x1 = data(package = 'datasets')
+x2 = data(package = 'MASS')
+```
+
+```{r}
+x3 = data(package = c('datasets', 'MASS'))
+```
+
+### Convert to `flextable`
+
+The `S3` method dispatch `as_flextable.packageIQR()` ..
+
+```{r}
+#| results: hide
+x1 |> 
+  as_flextable()
+```
+
+
+
+### Row-Bind
+
+The `S3` method dispatch `rbind.packageIQR()` ..
+
+```{r}
+stopifnot(identical(rbind(x1, x2), x3))
+```
+
+
+
+### Head & Tail
+
+The `S3` method dispatch `head.packageIQR()` ..
+
+
+```{r}
+x1 |>
+  head(n = 3L) |>
+  as_flextable()
+```
+
+```{r}
+x2 |>
+  head(n = 3L) |>
+  as_flextable()
+```
+
+```{r}
+x3 |>
+  head(n = 3L) |>
+  as_flextable()
+```
+
+
+
+### Split by Package
+
+The `S3` method dispatch `split.packageIQR()` ..
+
+
+```{r}
+y = x3 |>
+  split()
+```
+
+```{r}
+stopifnot(
+  identical(y$datasets, x1), 
+  identical(y$MASS, x2)
+)
+```
+
+
+
+### Convert to `environment` 
+
+The `S3` method dispatch `as.environment.packageIQR()` ..
+
+```{r}
+datasets_ls1 = data(package = 'datasets') |> 
+  as.environment() |> 
+  as.list(sort = TRUE)
+```
+
+
+```{r}
+datasets_ls2 = 'package:datasets' |> 
+  as.environment() |> 
+  as.list(sort = TRUE)
+```
+
+This is only true for all-data package.
+```{r}
+stopifnot(identical(datasets_ls1, datasets_ls2))
+```
+
+```{r}
+MASS_ls1 = data(package = 'MASS') |> 
+  as.environment() |> 
+  as.list(sort = TRUE)
+library(MASS)
+MASS_ls2 = 'package:MASS' |> 
+  as.environment() |> 
+  as.list(sort = TRUE)
+stopifnot(!identical(MASS_ls1, MASS_ls2))
+```
 
 
