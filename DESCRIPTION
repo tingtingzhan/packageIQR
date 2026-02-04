@@ -12,5 +12,5 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Depends: R (>= 4.5)
 Imports: flextable (== 0.9.10)
-Suggests: knitr, quarto, rmarkdown, MASS
+Suggests: knitr, quarto, rmarkdown, MASS (== 7.3.65)
 VignetteBuilder: quarto
