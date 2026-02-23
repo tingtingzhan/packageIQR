@@ -4,12 +4,14 @@
 \alias{dataFrom}
 \title{Data From Package}
 \usage{
-dataFrom(x = data(package = "datasets"), what)
+dataFrom(x = data(package = "datasets"), what, invert = FALSE)
 }
 \arguments{
 \item{x}{a \code{packageIQR} object, returned value from \link[utils]{data}}
 
 \item{what}{\link[base]{character} scalar or \link[base]{vector}, class(es), see \link[base]{inherits}}
+
+\item{invert}{\link[base]{logical} scalar}
 }
 \value{
 Function \code{\link[=dataFrom]{dataFrom()}} returns a \link[base]{list} of R objects.
@@ -19,6 +21,7 @@ Obtain all objects available via \link[utils]{data} from a package
 }
 \examples{
 dataFrom(what = 'data.frame') |> lapply(FUN = head)
+dataFrom(what = 'data.frame', invert = TRUE) |> lapply(FUN = head)
 dataFrom(what = 'numeric') |> lapply(FUN = head)
 data(package = c('datasets', 'MASS')) |> dataFrom(what = 'data.frame') |> lapply(FUN = head)
 

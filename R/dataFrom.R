@@ -7,7 +7,8 @@
 #' 
 #' @param what \link[base]{character} scalar or \link[base]{vector}, class(es), see \link[base]{inherits}
 #' 
-
+#' @param invert \link[base]{logical} scalar
+#' 
 #' @returns 
 #' Function [dataFrom()] returns a \link[base]{list} of R objects.
 #' 
@@ -16,6 +17,7 @@
 #' 
 #' @examples
 #' dataFrom(what = 'data.frame') |> lapply(FUN = head)
+#' dataFrom(what = 'data.frame', invert = TRUE) |> lapply(FUN = head)
 #' dataFrom(what = 'numeric') |> lapply(FUN = head)
 #' data(package = c('datasets', 'MASS')) |> dataFrom(what = 'data.frame') |> lapply(FUN = head)
 #' 
@@ -23,7 +25,7 @@
 #' @keywords internal
 #' @importFrom utils data
 #' @export
-dataFrom <- function(x = data(package = 'datasets'), what) {
+dataFrom <- function(x = data(package = 'datasets'), what, invert = FALSE) {
   
   if (!inherits(x, what = 'packageIQR')) stop('input must be the return of utils::data')
   
@@ -55,7 +57,9 @@ dataFrom <- function(x = data(package = 'datasets'), what) {
   if (missing(what)) return(ret)
   
   id <- vapply(ret, FUN = inherits, what = what, FUN.VALUE = NA)
-  return(ret[id])
+  
+  if (!invert) return(ret[id])
+  return(ret[!id])
   
 }
 
