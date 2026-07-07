@@ -2,6 +2,7 @@ Package: packageIQR
 Type: Package
 Title: Additional S3 methods for packageIQR
 Version: 0.1.0
+Date: 2026-07-07
 Description: Additional S3 methods for packageIQR.
 License: GPL-2
 Encoding: UTF-8
@@ -9,7 +10,7 @@ Authors@R: c(person(given = "Tingting", family = "Zhan", role =
        c("aut", "cre"), email = "tingtingzhan@gmail.com"))
 Language: en-US
 Depends: R (>= 4.6)
-Imports: flextable (== 0.9.12)
-Suggests: MASS (== 7.3.65)
+Imports: flextable (== 0.10.0)
+Suggests: MASS
 Config/roxygen2/version: 8.0.0
 Config/roxygen2/markdown: TRUE
