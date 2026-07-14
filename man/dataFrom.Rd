@@ -14,7 +14,7 @@ dataFrom(x = data(package = "datasets"), what, invert = FALSE)
 \item{invert}{\link[base]{logical} scalar}
 }
 \value{
-Function \code{\link[=dataFrom]{dataFrom()}} returns a \link[base]{list} of R objects.
+The function \code{\link[=dataFrom]{dataFrom()}} returns a \link[base]{list} of R objects.
 }
 \description{
 Obtain all objects available via \link[utils]{data} from a package

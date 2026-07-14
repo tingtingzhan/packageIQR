@@ -1,26 +1,13 @@
 
 
-#' @title S3 Method Dispatches for `'packageIQR'` Object
-#' 
-#' @param x `'packageIQR'` object, returned value of function \link[utils]{data},
-#' 
-#' @details
-#' Function [as.environment.packageIQR()] re-runs function \link[utils]{data} 
-#' in a \link[base]{new.env}.
-#' 
-#' @returns
-#' Function [as.environment.packageIQR()] returns an \link[base]{environment}.
-#' 
-#' @examples
-#' \dontrun{
-#' pkg = setdiff(rownames(installed.packages()), c('rjags', 'VennDiagram'))
-#' # still trying to understand what's wrong with \CRANpkg{VennDiagram}
-#' ev = data(package = pkg) |> as.environment() # not that slow
-#' length(ev)
-#' }
-#' @keywords internal
+# @details
+# The function [as.environment.packageIQR()] re-runs function \link[utils]{data} 
+# in a \link[base]{new.env}.
+# 
+# @returns
+# The function [as.environment.packageIQR()] returns an \link[base]{environment}.
+# 
 #' @importFrom utils data
-#' @export as.environment.packageIQR
 #' @export
 as.environment.packageIQR <- function(x) {
   
@@ -44,7 +31,13 @@ as.environment.packageIQR <- function(x) {
   
 }
 
-
+if (FALSE) {
+  pkg = setdiff(rownames(installed.packages()), c('rjags', 'VennDiagram'))
+  # still trying to understand what's wrong with \CRANpkg{VennDiagram}
+  ev = data(package = pkg) |> 
+    as.environment() # not that slow
+  length(ev)
+}
 
 
 

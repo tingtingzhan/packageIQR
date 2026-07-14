@@ -1,9 +1,4 @@
 
-#' @title rbind.packageIQR
-#' 
-#' @param ... one or more `'packageIQR'`
-#' 
-#' @export rbind.packageIQR
 #' @export
 rbind.packageIQR <- function(...) {
   

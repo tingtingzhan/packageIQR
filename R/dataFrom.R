@@ -10,7 +10,7 @@
 #' @param invert \link[base]{logical} scalar
 #' 
 #' @returns 
-#' Function [dataFrom()] returns a \link[base]{list} of R objects.
+#' The function [dataFrom()] returns a \link[base]{list} of R objects.
 #' 
 #' @references 
 #' \url{https://stackoverflow.com/questions/27709936/get-a-list-of-the-data-sets-in-a-particular-package}

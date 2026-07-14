@@ -1,15 +1,6 @@
 
 
-#' @title [head.packageIQR]
-#' 
-#' @param x a `'packageIQR'` object
-#' 
-#' @param n \link[base]{integer} scalar
-#' 
-#' @param ... ..
-#' 
 #' @importFrom utils head
-#' @export head.packageIQR
 #' @export
 head.packageIQR <- function(x, n, ...) {
   

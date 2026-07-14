@@ -1,16 +1,8 @@
 
 
-#' @title Split `'packageIQR'` Object by Package
-#' 
-#' @param x `'packageIQR'` object, returned value of function \link[utils]{data},
-#' 
-#' @param ... additional parameters, currently not in use
-#' 
-#' @details
-#' Function [split.packageIQR()] is inspired by function `?utils:::print.packageIQR`.
-#' 
-#' @keywords internal
-#' @export split.packageIQR
+# @title Split `'packageIQR'` Object by Package
+# @details
+# The function [split.packageIQR()] is inspired by function `?utils:::print.packageIQR`.
 #' @export
 split.packageIQR <- function(x, ...) {
   
